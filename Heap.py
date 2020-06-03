@@ -72,12 +72,11 @@ class MinHeap:
 
 def heapSort(arr):
     H = MinHeap()
-    for val in arr:
-        H.insert(val)
-    i = 0
-    while H.size() > 0 and i < len(arr):
-        arr[i] = H.extractMin()
-        i += 1
+    while len(arr) > 0:
+        H.insert(arr.pop)
+
+    while H.size() > 0:
+        arr.append(H.extractMin())
 
     # time O(n log(n))
-    # space O(n)
+    # space O(1)
