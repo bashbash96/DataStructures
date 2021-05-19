@@ -43,6 +43,8 @@ class Queue:
 
         data = self.head.data
         self.head = self.head.next
+        if not self.head:
+            self.tail = None
         self.length -= 1
         return data
 
