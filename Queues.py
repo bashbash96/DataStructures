@@ -38,14 +38,16 @@ class Queue:
         remove the first element of the queue
         :return: data / None
         """
-        if self.head is None:
+        if not self.head:
             return None
 
         data = self.head.data
         self.head = self.head.next
         if not self.head:
             self.tail = None
+
         self.length -= 1
+
         return data
 
     def isEmpty(self):
@@ -84,3 +86,78 @@ class Queue:
 
         if curr is not None:
             print(curr.data)
+
+
+class CircularQueue:
+    def __init__(self, capacity):
+        self.queue = [-1] * capacity
+        self.size = 0
+        self.capacity = capacity
+        self.head = 0
+        self.tail = -1
+
+    def enQueue(self, value):
+        """
+        :type value: int
+        :rtype: bool
+        """
+        if self.isFull():
+            return False
+
+        self.size += 1
+        self.tail = (self.tail + 1) % self.capacity
+        self.queue[self.tail] = value
+
+        return True
+
+    def deQueue(self):
+        """
+        :rtype: bool
+        """
+        if self.isEmpty():
+            return False
+
+        self.queue[self.head] = -1
+        self.size -= 1
+        self.head = (self.head + 1) % self.capacity
+
+        return True
+
+    def Front(self):
+        """
+        :rtype: int
+        """
+        if self.isEmpty():
+            return -1
+
+        return self.queue[self.head]
+
+    def Rear(self):
+        """
+        :rtype: int
+        """
+        if self.isEmpty():
+            return -1
+
+        return self.queue[self.tail]
+
+    def isEmpty(self):
+        """
+        :rtype: bool
+        """
+
+        return self.size == 0
+
+    def isFull(self):
+        """
+        :rtype: bool
+        """
+
+        return self.size == self.capacity
+
+
+"""
+    [-1, 2, 3]
+            t
+         h 
+"""
