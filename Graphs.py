@@ -1,7 +1,7 @@
 # ----------------- Graph implementation with list ---------------------
 
-from sys import maxsize
-from collections import defaultdict
+
+from collections import defaultdict, deque
 
 
 class Graph:
@@ -23,15 +23,8 @@ class Graph:
         self.v.add(v)
         self.v.add(u)
 
-        if u in self.E:
-            self.E[u].add(v)
-        else:
-            self.E[u] = {v}
-
-        # if v in self.E:
-        #     self.E[v].add(u)
-        # else:
-        #     self.E[v] = {u}
+        self.E[u].add(v)
+        # self.E[v].add(u)
 
     def BFS(self, v):
         """
@@ -41,33 +34,30 @@ class Graph:
         """
         # initialization
         distance = {}
-        color = {}
+        visited = set()
         parent = {}
 
         for ver in self.v:
-            distance[ver] = maxsize
-            color[ver] = 'w'
+            distance[ver] = float('inf')
             parent[ver] = None
 
         distance[v] = 0
-        color[v] = 'g'
+        visited.add(v)
 
         # creating a queue
-        q = [v]
+        q = deque([v])
 
-        while len(q) > 0:
-            curr = q.pop(0)
+        while q:
+            curr = q.popleft()
             print(curr, end=' ')
 
             # for all adjacent nodes if there is an adjacent node that we didn't visit, visit it
             for ver in self.E[curr]:
-                if color[ver] == 'w':
-                    color[ver] = 'g'
+                if ver not in visited:
+                    visited.add(ver)
                     distance[ver] = distance[curr] + 1
                     parent[ver] = curr
                     q.append(ver)
-
-            color[curr] = 'b'
 
         print()
 
