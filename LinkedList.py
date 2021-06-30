@@ -24,7 +24,7 @@ class SinglyLinkedList:
         :return:
         """
         newNode = Node(data)
-        if self.head is None:
+        if not self.head:
             self.head = self.tail = newNode
         else:
             newNode.next = self.head
@@ -40,7 +40,7 @@ class SinglyLinkedList:
         """
         newNode = Node(data)
 
-        if self.head is None:
+        if not self.head:
             self.head = self.tail = newNode
         else:
             self.tail.next = newNode
@@ -63,7 +63,7 @@ class SinglyLinkedList:
         """
         curr = self.head
 
-        while curr is not None:
+        while curr:
             if curr.data == data:
                 return True
             curr = curr.next
@@ -78,7 +78,7 @@ class SinglyLinkedList:
         :param data: data to remove
         :return:
         """
-        if self.head is None:
+        if not self.head:
             return
 
         if self.head.data == data:
@@ -90,7 +90,7 @@ class SinglyLinkedList:
             return
 
         curr = self.head
-        while curr.next is not None:
+        while curr.next:
             if curr.next.data == data:
                 if curr.next == self.tail:
                     self.tail = curr
@@ -112,7 +112,7 @@ class SinglyLinkedList:
         :return:
         """
 
-        if self.head is None:
+        if not self.head:
             return
 
         curr = self.head
