@@ -85,6 +85,43 @@ class BST:
 
         return node
 
+    def delete(self, data):
+        self.root = self._delete(self.root, data)
+
+    def _delete(self, node, data):
+        if not node:
+            return None
+        if data > node.data:
+            node.right = self._delete(node.right, data)
+        elif data < node.data:
+            node.left = self._delete(node.left, data)
+        else:
+            # one or no children
+            if not node.left:
+                return node.right
+
+            if not node.right:
+                return node.left
+
+            # two children
+
+            successor = BST._min(node.right)
+
+            node.data = successor
+            node.right = self._delete(node.right, successor)
+
+        return node
+
+    @staticmethod
+    def _min(node):
+        curr = node
+        min_val = node.data
+        while curr:
+            min_val = curr.data
+            curr = curr.left
+
+        return min_val
+
     # ------------------- DFS Traversal ------------------
     def inOrder(self):
         """
@@ -159,12 +196,3 @@ class BST:
             return 0
 
         return 1 + max(self.height2(node.left), self.height2(node.right))
-
-
-bst = BST()
-bst.insert(10)
-bst.insert(5)
-bst.insert(25)
-bst.insert(23)
-bst.insert(-1)
-bst.inOrder()
