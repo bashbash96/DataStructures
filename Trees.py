@@ -1,4 +1,5 @@
 import sys
+from Queues import Queue
 
 
 # ------------------- Linked List Trees ------------------
@@ -14,81 +15,6 @@ class Node2:
         self.data = data
         self.next = None
 
-
-# ------------------- Queue implementation with Linked List ------------------
-class Queue:
-    def __init__(self):
-        """
-        constructor of empty Queue
-        """
-        self.head = None
-        self.tail = None
-        self.length = 0
-
-    def enqueue(self, data):
-        """
-        add new node to the queue
-        :param data: data to insert
-        :return:
-        """
-        node = Node2(data)
-        self.length += 1
-        if not self.head:
-            self.head = self.tail = node
-            return
-
-        self.tail.next = node
-        self.tail = node
-
-    def dequeue(self):
-        """
-        remove the first element of the queue
-        :return: data / None
-        """
-        if self.head is None:
-            return None
-
-        data = self.head.data
-        self.head = self.head.next
-        self.length -= 1
-        return data
-
-    def isEmpty(self):
-        """
-        check if the queue is empty or note
-        :return: True / False
-        """
-        return self.length == 0
-
-    def deleteQueue(self):
-        """
-        delete the entire queue
-        :return:
-        """
-        self.head = self.tail = None
-
-    def peek(self):
-        """
-        :return: the data of the head node
-        """
-        if self.head:
-            return self.head.data
-
-        return None
-
-    def printQueue(self):
-        """
-        print the queue elements
-        :return:
-        """
-        curr = self.head
-
-        while curr.next is not None:
-            print(curr.data, end=" -> ")
-            curr = curr.next
-
-        if curr is not None:
-            print(curr.data)
 
 # ------------------- Trie implementation with hashMap ------------------
 
@@ -147,23 +73,17 @@ class BST:
         self.root = None
 
     def insert(self, data):
-        if self.root is None:
-            self.root = Node(data)
-        else:
-            self.insert2(self.root, data)
+        self.root = self._insert(self.root, data)
 
-    def insert2(self, node, data):
-
-        if data > node.data:
-            if node.right is None:
-                node.right = Node(data)
-            else:
-                self.insert2(node.right, data)
+    def _insert(self, node, data):
+        if not node:
+            return Node(data)
+        elif data > node.data:
+            node.right = self._insert(node.right, data)
         else:
-            if node.left is None:
-                node.left = Node(data)
-            else:
-                self.insert2(node.left, data)
+            node.left = self._insert(node.left, data)
+
+        return node
 
     # ------------------- DFS Traversal ------------------
     def inOrder(self):
@@ -240,3 +160,11 @@ class BST:
 
         return 1 + max(self.height2(node.left), self.height2(node.right))
 
+
+bst = BST()
+bst.insert(10)
+bst.insert(5)
+bst.insert(25)
+bst.insert(23)
+bst.insert(-1)
+bst.inOrder()
