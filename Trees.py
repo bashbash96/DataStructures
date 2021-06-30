@@ -1,4 +1,3 @@
-import sys
 from Queues import Queue
 
 
@@ -8,12 +7,6 @@ class Node:
         self.data = data
         self.left = None
         self.right = None
-
-
-class Node2:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
 
 
 # ------------------- Trie implementation with hashMap ------------------
@@ -48,10 +41,7 @@ class Trie:
                 return False
             curr = curr[c]
 
-        if '*' in curr:
-            return True
-
-        return False
+        return '*' in curr
 
     def startsWith(self, prefix: str) -> bool:
         """
