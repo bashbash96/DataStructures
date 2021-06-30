@@ -56,13 +56,11 @@ class QuickFind:
         return self.get_root(u) == self.get_root(v)
 
     def union(self, u, v):
-        if not self.is_valid(u) or not self.is_valid(v):
+        if not self.is_valid(u) or not self.is_valid(v) or self.is_connected(u, v):
             return
 
         root_u = self.get_root(u)
         root_v = self.get_root(v)
-        if root_u == root_v:
-            return
 
         if self.sizes[root_u] < self.sizes[root_v]:
             self.parent[root_u] = root_v
@@ -70,18 +68,3 @@ class QuickFind:
         else:
             self.parent[root_v] = root_u
             self.sizes[root_u] += self.sizes[root_v]
-
-
-qf = QuickFind(10)
-qf.union(0, 5)
-qf.union(0, 6)
-qf.union(1, 2)
-qf.union(1, 7)
-qf.union(8, 3)
-qf.union(8, 9)
-qf.union(0, 9)
-qf.union(3, 4)
-qf.union(0, 4)
-for i in range(10):
-    print(i, qf.parent[i])
-# print(qf.parent)
