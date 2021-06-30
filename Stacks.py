@@ -35,10 +35,12 @@ class Stack:
         """
         data = None
 
-        if self.head:
-            data = self.head.data
-            self.head = self.head.next
-            self.size -= 1
+        if not self.head:
+            return data
+
+        data = self.head.data
+        self.head = self.head.next
+        self.size -= 1
 
         return data
 
@@ -61,6 +63,8 @@ class Stack:
         """
         if self.head:
             return self.head.data
+
+        return None
 
     def deleteStack(self):
         """
